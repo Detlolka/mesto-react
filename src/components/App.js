@@ -78,13 +78,13 @@ class App extends React.Component {
                   isOpen={this.state.isEditProfilePopupOpen} onClose={this.closeAllPopups}
                   children={(
                    <React.Fragment>
-                         <input type="text" name="profileName" value="Жак-Ив Кусто" className="popup__input popup__input_name"
-                         id="input-name" placeholder="Имя" required minlength="2" maxlength="40"
+                         <input type="text" name="profileName" defaultValue="Жак-Ив Кусто" className="popup__input popup__input_name"
+                         id="input-name" placeholder="Имя" required minLength="2" maxLength="40"
                          pattern="[А-ЯЁа-яёA-Za-z-\s]*" />
                          <span className="error" id="input-name-error"></span>
 
-                         <input type="text" name="profileAbout" value="Исследователь океана" className="popup__input popup__input_about"
-                         id="input-about"   placeholder="О себе" required minlength="2" maxlength="200" />
+                         <input type="text" name="profileAbout" defaultValue="Исследователь океана" className="popup__input popup__input_about"
+                         id="input-about"   placeholder="О себе" required minLength="2" maxLength="200" />
                         <span className="error" id="input-about-error"></span>
                   </React.Fragment>
                 )} />
@@ -97,11 +97,11 @@ class App extends React.Component {
                    onClose={this.closeAllPopups}
                    children={(
                        <React.Fragment>
-                           <input type="text" name="placeName" value="" className="popup__input popup__input_place"
-                           id="input-place" placeholder="Название" required minlength="1" maxlength="30" pattern="[А-ЯЁа-яёA-Za-z-\s]*" />
+                           <input type="text" name="placeName" defaultValue="" className="popup__input popup__input_place"
+                           id="input-place" placeholder="Название" required minLength="1" maxLength="30" pattern="[А-ЯЁа-яёA-Za-z-\s]*" />
                            <span className="error" id="input-place-error"></span>
 
-                           <input type="url" name="placePhoto" value="" className="popup__input popup__input_image"
+                           <input type="url" name="placePhoto" defaultValue="" className="popup__input popup__input_image"
                            id="input-url" placeholder="Ссылка на картинку" required />
                           <span className="error" id="input-url-error"></span>
                        </React.Fragment>
@@ -115,7 +115,7 @@ class App extends React.Component {
                       onClose={this.closeAllPopups}
                       children={(
                           <React.Fragment>
-                              <input type="url" name="avatarPhoto" value="" className="popup__input popup__input_avatar"
+                              <input type="url" name="avatarPhoto" defaultValue="" className="popup__input popup__input_avatar"
                               id="input-avatar" placeholder="Введите URL" required />
                               <span className="error" id="input-avatar-error"></span>     
                           </React.Fragment>
