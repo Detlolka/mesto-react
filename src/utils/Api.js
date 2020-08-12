@@ -12,12 +12,14 @@
       return Promise.reject(`Что то пошло не так: ${res.status}`)      
   }
 
-  getInitialCards() {                        //GET-запрос карточек
+ //GET-запрос карточек
+  getInitialCards() {                       
     return fetch(`${this._baseUrl}/cards`, { headers: this._headers})
     .then(this._response)    
 }
 
-  createCard (name, link) {  // POST-запрос на добавление карточки
+// POST-запрос на добавление карточки
+  createCard (name, link) {  
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
@@ -29,7 +31,8 @@
     .then(this._response)
   }
 
-  removeCard(cardId) { // DELETE - запрос на удаление карточки
+// DELETE - запрос на удаление карточки
+  removeCard(cardId) { 
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers
@@ -37,7 +40,8 @@
     .then(this._response);
   }
 
-  likeCard(cardId) {  // PUT-запрос на лайк
+// PUT-запрос на лайк
+  likeCard(cardId) {  
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this._headers
@@ -45,7 +49,8 @@
     .then(this._response);
   }
 
-  dislikeCard(cardId) {  // DELETE- запрос на лайк
+// DELETE- запрос на лайк
+  dislikeCard(cardId) {  
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
@@ -53,15 +58,16 @@
     .then(this._response);
   }
   
-
-  getUserInfo() {     // GET-запрос на получение данных пользователя
+// GET-запрос на получение данных пользователя
+  getUserInfo() {     
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers  
     })
     .then(this._response)    
   }
 
-  changeUserInfo(name, about) {  // PATCH-запрос на обновление даннных пользователя с сервера
+// PATCH-запрос на обновление даннных пользователя с сервера
+  changeUserInfo(name, about) {  
     return fetch(`${this._baseUrl}/users/me`, {
         method: 'PATCH',
         headers: this._headers,
@@ -72,8 +78,9 @@
     })
     .then(this._response)   
  }
-
-  changeAvatar(avatar) {  // PATCH - запрос на обновление аватарки
+ 
+// PATCH - запрос на обновление аватарки
+  changeAvatar(avatar) {  
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
