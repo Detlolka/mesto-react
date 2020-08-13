@@ -1,3 +1,5 @@
+import { configApi } from './utils.js';
+
 
  class Api {
   constructor(options) {
@@ -92,7 +94,9 @@
   }
 }
 
-export default Api;
+const api = new Api(configApi);
+
+export default api;
 
 
 
