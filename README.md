@@ -8,6 +8,6 @@
 
 Верстка на HTML + CSS, технологии Flexbox и GridLayout, за логику отвечает фреймворк React, за сервервую часть Node.
 
-## Ссылка (сервер пока не запущен)
+## Ссылка 
 
 https://detlolka.github.io/mesto-react/
