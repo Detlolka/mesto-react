@@ -71,6 +71,35 @@ class App extends React.Component {
       isDeletePlacePopupOpen: false,
     });
   };
+  
+//смена данных пользователя
+handleUpdateUser = (name, about) => {  
+  api
+    .changeUserInfo(name, about)
+    .then(user =>
+      this.setState({
+        currentUser: {
+          ...this.state.currentUser,
+          userName: user.name,
+          userDescription: user.about
+        }
+      }))
+    .catch(err => console.error(err))    
+}
+
+//Смена аватара пользователя
+  handleUpdateAvatar = (avatar) => {    
+    api
+      .changeAvatar(avatar)
+      .then(user =>
+        this.setState({
+          currentUser: {
+            ...this.state.currentUser,
+            userAvatar: user.avatar
+          }
+        }))
+      .catch(err => console.error(err))
+  }
 
 //Удаление карточки и пересоздание массива
   handleCardDelete = (cardId) => {                           
@@ -83,7 +112,7 @@ class App extends React.Component {
       .catch(err => console.error(err));
   }
 
-//Постановка лайка
+//Постановка лайка и удаление лайка
   changeCardLike = (card) => {
     const isLiked = card.likes.some(i => i._id === this.state.currentUser.userId);
     api.likeCardStatus(card._id, !isLiked).then((newCard) => {
