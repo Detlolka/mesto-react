@@ -5,6 +5,8 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithImage from "./PopupWithImage";
 import PopupWithForm from "./PopupWithForm";
+import CurrentUserContext from "../contexts/CurrentUserContext";
+import api from "../utils/api";
 
 class App extends React.Component {
   constructor(props) {
@@ -15,6 +17,18 @@ class App extends React.Component {
       isEditAvatarPopupOpen: false,
       selectedCard: null,
       isDeletePlacePopupOpen: false,
+      currentUser: {
+        userName: '',
+        userAbout: '',
+        userAvatar: '',
+        userId: ''
+      },
+      cardItems: [],
+      isLoadingUpdate: {
+        editProfile: false,
+        editAvatar: false,
+        createPlace: false
+      }
     };
   }
 
@@ -57,6 +71,57 @@ class App extends React.Component {
       isDeletePlacePopupOpen: false,
     });
   };
+
+//Удаление карточки и пересоздание массива
+  handleCardDelete = (cardId) => {                           
+    api.deleteCard(cardId).then((res) => {
+      const newCards = this.state.cardItems.filter((c) => c._id !== cardId);
+      this.setState({
+        cardItems: newCards
+      });
+    })
+      .catch(err => console.error(err));
+  }
+
+//Постановка лайка
+  changeCardLike = (card) => {
+    const isLiked = card.likes.some(i => i._id === this.state.currentUser.userId);
+    api.likeCardStatus(card._id, !isLiked).then((newCard) => {
+      const newCards = this.state.cards.map((c) => c._id === card._id ? newCard : c);
+      this.setState({
+        cardItems: newCards
+      });
+    })
+      .catch(err => console.error(err));
+  }
+
+//Добавление новой карточки
+  handleAddPlaceSubmit = (name, link) => {                        
+    api.createCard(name, link)
+      .then((newCard) => {
+        this.setState({
+          cardItems: [...this.state.cardItems, newCard]
+        })
+      })
+      .catch(err => console.error(err))      
+  }
+
+ //Перенесен Api в App
+  componentDidMount() {                                        
+    Promise.all([api.getInitialCards(), api.getUserInfo()])
+      .then(([cardItems, user]) => {
+        this.setState({
+          currentUser: {
+          userName: user.name,
+          userAbout: user.about,
+          userAvatar: user.avatar,
+          userId: user.id,          
+          },
+          cardItems,
+        });
+      })
+      .catch((err) => console.error(err));
+  }
 
   render() {
     return (

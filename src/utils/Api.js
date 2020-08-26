@@ -42,24 +42,23 @@ import { configApi } from './utils.js';
     .then(this._response);
   }
 
-// PUT-запрос на лайк
-  likeCard(cardId) {  
+// PUT и DELETE запросы на лайк
+  likeCardStatus(cardId, isLiked) {
+    if(isLiked) {  
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this._headers
     })
     .then(this._response);
+   }
+   return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    method: 'DELETE',
+    headers: this._headers
+  })
+  .then(this._response);
   }
 
-// DELETE- запрос на лайк
-  dislikeCard(cardId) {  
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'DELETE',
-      headers: this._headers
-    })
-    .then(this._response);
-  }
-  
+
 // GET-запрос на получение данных пользователя
   getUserInfo() {     
     return fetch(`${this._baseUrl}/users/me`, {

@@ -13,18 +13,7 @@ class Main extends React.Component {
     };
   }
 
-  componentDidMount() {
-    Promise.all([api.getInitialCards(), api.getUserInfo()])
-      .then(([cardItems, user]) => {
-        this.setState({
-          userName: user.name,
-          userAbout: user.about,
-          userAvatar: user.avatar,
-          cardItems,
-        });
-      })
-      .catch((err) => console.error(err));
-  }
+  
 
   render() {
     return (
