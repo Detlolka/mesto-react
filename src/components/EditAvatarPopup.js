@@ -3,20 +3,20 @@ import PopupWithForm from './PopupWithForm';
 
 function EditAvatarPopup({onClose, isOpen, onUpdateAvatar}) {
 
-    const avatarRefer = React.useRef();
+    const avatarRef = React.useRef();
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
         onUpdateAvatar({
-            avatar: avatarRefer.current.value
+            avatar: avatarRef.current.value
         });
         onClose();
-        avatarRefer.current.value = '';
+        avatarRef.current.value = '';
     }
 
     return (
         <PopupWithForm
-        onSumbit={handleSubmit}
+        onSubmit={handleSubmit}
         name="avatar"
         title="Обновить аватар"
         buttonName="Сохранить"
@@ -26,13 +26,12 @@ function EditAvatarPopup({onClose, isOpen, onUpdateAvatar}) {
           <React.Fragment>
             <input
               type="url"
-              name="avatarPhoto"
-              defaultValue=""
+              name="avatarPhoto"              
               className="popup__input popup__input_avatar"
               id="input-avatar"
               placeholder="Введите URL"
-              ref={avatarRefer}
-              value={avatarRefer.value}
+              ref={avatarRef}
+              value={avatarRef.value}
               required
             />
             <span className="error" id="input-avatar-error" />

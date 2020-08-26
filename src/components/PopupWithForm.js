@@ -1,6 +1,6 @@
 import React from "react";
 
-function PopupWithForm({name, title, buttonName, isOpen, onClose, children}) {
+function PopupWithForm({name, title, buttonName, isOpen, onClose, children, onSubmit}) {
   return (
     <div
       className={
@@ -9,6 +9,7 @@ function PopupWithForm({name, title, buttonName, isOpen, onClose, children}) {
     >
       <div className="popup__container">
         <form
+          onSubmit={onSubmit}
           className="popup__form"
           name={name}
           method="GET"

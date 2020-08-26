@@ -1,18 +1,10 @@
 import React from "react";
 import Card from "./Card";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userName: "",
-      userAbout: "",
-      userAvatar: "",
-      cardItems: [],
-    };
-  }
 
-  
+  static contextType = CurrentUserContext;  
 
   render() {
     return (
@@ -21,20 +13,20 @@ class Main extends React.Component {
           <div className="profile__avatar" onClick={this.props.onEditAvatar}>
             <img
               className="profile__image"
-              src={this.state.userAvatar}
+              src={this.context.userAvatar}
               alt="Аватарка"
             />
           </div>
           <div className="profile__info">
             <div className="profile__container">
-              <h1 className="profile__title">{this.state.userName}</h1>
+              <h1 className="profile__title">{this.context.userName}</h1>
               <button
                 type="button"
                 className="profile__editButton"
                 onClick={this.props.onEditProfile}
               ></button>
             </div>
-            <h2 className="profile__subtitle">{this.state.userAbout}</h2>
+            <h2 className="profile__subtitle">{this.context.userAbout}</h2>
           </div>
           <button
             type="button"
@@ -43,11 +35,13 @@ class Main extends React.Component {
           ></button>
         </section>
         <section className="elements">
-          {this.state.cardItems.map((card, i) => {
+          {this.props.cards.map((card, i) => {
             return (
               <Card
+                onCardLike={this.props.onCardLike}                
                 clickCard={this.props.onEditImage}
                 deleteCard={this.props.onDeletePlace}
+                onCardDelete={this.props.onCardDelete}
                 card={card}
                 key={i}
               />

@@ -19,6 +19,7 @@ function EditProfilePopup({ onClose, isOpen, onUpdateUser}) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     onUpdateUser(name, about);
+    onClose();
   };
 
   useEffect(() => {
@@ -39,7 +40,7 @@ function EditProfilePopup({ onClose, isOpen, onUpdateUser}) {
           <input
             type="text"
             name="profileName"
-            defaultValue="Жак-Ив Кусто"
+            value={name}
             className="popup__input popup__input_name"
             id="input-name"
             placeholder="Имя"
@@ -54,7 +55,7 @@ function EditProfilePopup({ onClose, isOpen, onUpdateUser}) {
           <input
             type="text"
             name="profileAbout"
-            defaultValue="Исследователь океана"
+            value={about}
             className="popup__input popup__input_about"
             id="input-about"
             placeholder="О себе"

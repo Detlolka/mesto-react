@@ -8,6 +8,7 @@ import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 import api from "../utils/api";
 
 class App extends React.Component {
@@ -83,7 +84,7 @@ class App extends React.Component {
           currentUser: {
             ...this.state.currentUser,
             userName: user.name,
-            userDescription: user.about,
+            userAbout: user.about,
           },
         })
       )
@@ -108,7 +109,7 @@ class App extends React.Component {
   //Удаление карточки и пересоздание массива
   handleCardDelete = (cardId) => {
     api
-      .deleteCard(cardId)
+      .removeCard(cardId)
       .then((res) => {
         const newCards = this.state.cardItems.filter((c) => c._id !== cardId);
         this.setState({
@@ -126,7 +127,7 @@ class App extends React.Component {
     api
       .likeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        const newCards = this.state.cards.map((c) =>
+        const newCards = this.state.cardItems.map((c) =>
           c._id === card._id ? newCard : c
         );
         this.setState({
@@ -137,12 +138,12 @@ class App extends React.Component {
   };
 
   //Добавление новой карточки
-  handleAddPlaceSubmit = (name, link) => {
+  handleAddPlace = (name, link) => {
     api
       .createCard(name, link)
       .then((newCard) => {
         this.setState({
-          cardItems: [...this.state.cardItems, newCard],
+          cardItems: [newCard, ...this.state.cardItems],
         });
       })
       .catch((err) => console.error(err));
@@ -151,13 +152,13 @@ class App extends React.Component {
   //Перенесен Api в App
   componentDidMount() {
     Promise.all([api.getInitialCards(), api.getUserInfo()])
-      .then(([cardItems, user]) => {
+      .then(([cardItems, user]) => {        
         this.setState({
           currentUser: {
             userName: user.name,
             userAbout: user.about,
             userAvatar: user.avatar,
-            userId: user.id,
+            userId: user._id,
           },
           cardItems,
         });
@@ -176,6 +177,9 @@ class App extends React.Component {
             onEditImage={this.handleEditImageClick}
             onDeletePlace={this.handleEditDeleteClick}
             onEditAvatar={this.handleEditAvatarClick}
+            cards={this.state.cardItems}
+            onCardLike={this.changeCardLike}
+            onCardDelete={this.handleCardDelete}
           />
           <Footer />
           <PopupWithForm
@@ -191,46 +195,16 @@ class App extends React.Component {
             onUpdateUser={(name, about) => this.handleUpdateUser(name, about)}
           />
 
-          <EditAvatarPopup            
+          <EditAvatarPopup
             isOpen={this.state.isEditAvatarPopupOpen}
             onClose={this.closeAllPopups}
             onUpdateAvatar={({ avatar }) => this.handleUpdateAvatar(avatar)}
           />
 
-          <PopupWithForm
-            name="card"
-            title="Новое место"
-            buttonName="Создать"
+          <AddPlacePopup            
             isOpen={this.state.isAddPlacePopupOpen}
             onClose={this.closeAllPopups}
-            children={
-              <React.Fragment>
-                <input
-                  type="text"
-                  name="placeName"
-                  defaultValue=""
-                  className="popup__input popup__input_place"
-                  id="input-place"
-                  placeholder="Название"
-                  required
-                  minLength="1"
-                  maxLength="30"
-                  pattern="[А-ЯЁа-яёA-Za-z-\s]*"
-                />
-                <span className="error" id="input-place-error" />
-
-                <input
-                  type="url"
-                  name="placePhoto"
-                  defaultValue=""
-                  className="popup__input popup__input_image"
-                  id="input-url"
-                  placeholder="Ссылка на картинку"
-                  required
-                />
-                <span className="error" id="input-url-error" />
-              </React.Fragment>
-            }
+            onAddPlace={this.handleAddPlace}
           />
 
           <PopupWithImage
