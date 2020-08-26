@@ -7,6 +7,7 @@ import PopupWithImage from "./PopupWithImage";
 import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import api from "../utils/api";
 
 class App extends React.Component {
@@ -184,12 +185,16 @@ class App extends React.Component {
             isOpen={this.state.isDeletePlacePopupOpen}
             onClose={this.closeAllPopups}
           />
-          <EditProfilePopup            
+          <EditProfilePopup
             isOpen={this.state.isEditProfilePopupOpen}
             onClose={this.closeAllPopups}
-            onUpdateUser={(name, about) =>
-              this.handleUpdateUser(name, about)
-            }
+            onUpdateUser={(name, about) => this.handleUpdateUser(name, about)}
+          />
+
+          <EditAvatarPopup            
+            isOpen={this.state.isEditAvatarPopupOpen}
+            onClose={this.closeAllPopups}
+            onUpdateAvatar={({ avatar }) => this.handleUpdateAvatar(avatar)}
           />
 
           <PopupWithForm
@@ -224,28 +229,6 @@ class App extends React.Component {
                   required
                 />
                 <span className="error" id="input-url-error" />
-              </React.Fragment>
-            }
-          />
-
-          <PopupWithForm
-            name="avatar"
-            title="Обновить аватар"
-            buttonName="Сохранить"
-            isOpen={this.state.isEditAvatarPopupOpen}
-            onClose={this.closeAllPopups}
-            children={
-              <React.Fragment>
-                <input
-                  type="url"
-                  name="avatarPhoto"
-                  defaultValue=""
-                  className="popup__input popup__input_avatar"
-                  id="input-avatar"
-                  placeholder="Введите URL"
-                  required
-                />
-                <span className="error" id="input-avatar-error" />
               </React.Fragment>
             }
           />
