@@ -25,7 +25,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       setCardName("");
       setCardLink("");
     }
-  })
+  }, [isOpen])
 
   return (
     <PopupWithForm

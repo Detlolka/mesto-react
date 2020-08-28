@@ -18,7 +18,7 @@ function EditAvatarPopup({onClose, isOpen, onUpdateAvatar}) {
       if(isOpen) {
         avatarRef.current.value = '';
       }
-    })
+    }, [isOpen])
 
     return (
         <PopupWithForm
